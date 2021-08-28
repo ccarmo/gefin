@@ -7,9 +7,14 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import br.com.squad.gefin.utility.TipoEvento;
 
 @Entity
 @Table(name = "tb_evento")
@@ -25,8 +30,14 @@ public class Evento {
     @Column(name = "DESCRICAO_EVENTO")
     private String descricao;
 
+    @NotBlank
     @Enumerated(EnumType.STRING)
-    private NaturezaEvento naturezaEvento;
+    @Column(name = "NATUREZA_EVENTO")
+    private TipoEvento naturezaEvento;
+
+    @ManyToOne
+    @JsonIgnoreProperties("evento")
+    private Movimento movimento;
 
     public Long getId() {
         return this.id;
@@ -44,12 +55,20 @@ public class Evento {
         this.descricao = descricao;
     }
 
-    public NaturezaEvento getNaturezaEvento() {
+    public TipoEvento getNaturezaEvento() {
         return this.naturezaEvento;
     }
 
-    public void setNaturezaEvento(NaturezaEvento naturezaEvento) {
+    public void setNaturezaEvento(TipoEvento naturezaEvento) {
         this.naturezaEvento = naturezaEvento;
+    }
+
+    public Movimento getMovimento() {
+        return this.movimento;
+    }
+
+    public void setMovimento(Movimento movimento) {
+        this.movimento = movimento;
     }
 
 }
