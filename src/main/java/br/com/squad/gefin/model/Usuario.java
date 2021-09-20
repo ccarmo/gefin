@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -26,9 +27,17 @@ public class Usuario {
     private Long id;
 
     @NotBlank
+    @Email
+    private String email;
+
+    @NotBlank
     @Size(min = 3, max = 100)
     @Column(name = "NOME_USUARIO")
     private String nome;
+
+    private String senha;
+
+
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties("usuario")
@@ -57,6 +66,22 @@ public class Usuario {
 
     public void setControle(List<Controle> controle) {
         this.controle = controle;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return this.senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
 }
